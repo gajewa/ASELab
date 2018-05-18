@@ -1,9 +1,14 @@
 import random
+import time
+import copy
+
 
 # unsortedList = random.sample(range(100), 1000)
-unsortedList = [random.randrange(1, 5) for _ in range(0, 5)]
+firstList = [random.randrange(1, 3) for _ in range(0, 5000)]
+secondList = copy.copy(firstList)
+thirdList = copy.copy(firstList)
 
-def bubbleSort():
+def bubbleSort(unsortedList):
     ready = False
 
     while not ready:
@@ -12,9 +17,12 @@ def bubbleSort():
             if unsortedList[i] > unsortedList[i+1]:
                 unsortedList[i], unsortedList[i+1] = unsortedList[i+1], unsortedList[i]
                 ready = False
+                break
+
+    return unsortedList
 
 
-def selectionSort():
+def selectionSort(unsortedList):
     for i in range(len(unsortedList)):
         minimum = 100
         minimumIndex = 0
@@ -24,10 +32,12 @@ def selectionSort():
                 minimumIndex = j
         unsortedList[i], unsortedList[minimumIndex] = unsortedList[minimumIndex], unsortedList[i]
 
+    return unsortedList
+
 def quickSort(unsortedList):
 
-    if(not unsortedList):
-        return
+    if not unsortedList:
+        return []
 
     lesser = []
     greater = []
@@ -43,18 +53,29 @@ def quickSort(unsortedList):
 
     return quickSort(lesser) + pivots + quickSort(greater)
 
-newList = quickSort(unsortedList)
+print('Unsorted list:' )
+print(firstList)
 
-# a = [1 , 2]
-# b = [3 , 4 ]
-# c = [5 , 6]
-#
-# d = a + b + c
+start = time.time()
+bubbleList = bubbleSort(firstList)
+end = time.time()
+bubbleTime = end - start
+# print(firstList)
 
-# a.append(b)
-# a.append(c)
-# print(d)
-#
-print(newList)
+start = time.time()
+selectionList = selectionSort(secondList)
+end = time.time()
+selectionTime = end - start
 
-# print(unsortedList)
+start = time.time()
+quickList = quickSort(thirdList)
+end = time.time()
+quickTime = end - start
+
+
+print('Sorted with bubblesort in ' + str(bubbleTime) + ' s: ')
+print(bubbleList)
+print('Sorted with selectionsort in ' + str(selectionTime) + ' s : ')
+print(selectionList)
+print('Sorted with bubblesort in ' + str(quickTime) + ' s :')
+print(quickList)
